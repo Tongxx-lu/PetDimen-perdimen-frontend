@@ -1,0 +1,99 @@
+<view class="page">
+  <view class="container">
+    <!-- 页面头部 -->
+    <view class="page-header">
+      <text class="page-title">发布动态</text>
+    </view>
+
+    <!-- 内容输入 -->
+    <view class="section">
+      <textarea 
+        class="content-input" 
+        placeholder="分享您和宠物的精彩时刻..."
+        value="{{form.content}}"
+        bindinput="onInputChange"
+        data-field="content"
+        maxlength="1000"
+      />
+      <view class="input-count">
+        {{form.content.length}}/1000
+      </view>
+    </view>
+
+    <!-- 媒体上传 -->
+    <view class="section">
+      <text class="section-title">添加媒体</text>
+      <view class="media-upload">
+        <view class="media-item" wx:for="{{form.media}}" wx:key="url">
+          <image src="{{item.url}}" mode="aspectFill" />
+          <view class="media-delete" bindtap="deleteMedia" data-index="{{index}}">✕</view>
+        </view>
+        <view wx:if="{{form.media.length < 9}}" class="media-add" bindtap="uploadMedia">
+          <text class="media-icon">📷</text>
+          <text class="media-text">添加图片</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 宠物标签 -->
+    <view class="section">
+      <text class="section-title">关联宠物</text>
+      <view class="pet-selector">
+        <view class="pet-item {{form.selectedPets.includes(pet.id) ? 'selected' : ''}}" 
+          wx:for="{{pets}}" 
+          wx:key="id"
+          bindtap="togglePet" 
+          data-id="{{pet.id}}">
+          <image src="{{pet.avatar}}" class="pet-avatar" />
+          <text class="pet-name">{{pet.name}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 位置信息 -->
+    <view class="section">
+      <text class="section-title">位置</text>
+      <view class="location-input" bindtap="selectLocation">
+        <text class="location-icon">📍</text>
+        <view class="location-text">
+          <text class="location-main {{form.location ? '' : 'placeholder'}}">
+            {{form.location || '点击选择位置'}}
+          </text>
+        </view>
+        <text class="location-arrow">›</text>
+      </view>
+    </view>
+
+    <!-- 隐私设置 -->
+    <view class="section">
+      <text class="section-title">隐私设置</text>
+      <view class="privacy-options">
+        <view class="privacy-item {{form.privacy === 'public' ? 'selected' : ''}}" bindtap="setPrivacy" data-privacy="public">
+          <view class="radio {{form.privacy === 'public' ? 'checked' : ''}}"></view>
+          <text class="privacy-label">公开</text>
+        </view>
+        <view class="privacy-item {{form.privacy === 'friends' ? 'selected' : ''}}" bindtap="setPrivacy" data-privacy="friends">
+          <view class="radio {{form.privacy === 'friends' ? 'checked' : ''}}"></view>
+          <text class="privacy-label">仅好友可见</text>
+        </view>
+        <view class="privacy-item {{form.privacy === 'private' ? 'selected' : ''}}" bindtap="setPrivacy" data-privacy="private">
+          <view class="radio {{form.privacy === 'private' ? 'checked' : ''}}"></view>
+          <text class="privacy-label">私密</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 按钮 -->
+    <view class="form-actions">
+      <button class="btn btn-primary btn-block" bindtap="onSubmit" loading="{{submitting}}">
+        发布
+      </button>
+      <button class="btn btn-outline btn-block" bindtap="navigateBack">
+        取消
+      </button>
+    </view>
+
+    <!-- 底部间距 -->
+    <view style="height: 20px;"></view>
+  </view>
+</view>

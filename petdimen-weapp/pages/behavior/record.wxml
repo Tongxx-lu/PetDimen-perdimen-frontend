@@ -1,0 +1,139 @@
+<view class="page">
+  <view class="container">
+    <!-- 页面头部 -->
+    <view class="page-header">
+      <text class="page-title">记录行为</text>
+      <text class="page-subtitle">记录宠物的日常行为</text>
+    </view>
+
+    <!-- 表单 -->
+    <form bindsubmit="onSubmit">
+      <!-- 选择宠物 -->
+      <view class="form-section">
+        <text class="form-section-title">选择宠物 <text class="required">*</text></text>
+        <picker 
+          mode="selector" 
+          range="{{petNames}}"
+          range-key="name"
+          value="{{selectedPetIndex}}"
+          bindchange="onPetChange"
+        >
+          <view class="picker-input">
+            <text class="picker-text {{selectedPet ? '' : 'placeholder'}}">
+              {{selectedPet ? selectedPet.name : '请选择宠物'}}
+            </text>
+            <text class="picker-arrow">›</text>
+          </view>
+        </picker>
+      </view>
+
+      <!-- 行为类型 -->
+      <view class="form-section">
+        <text class="form-section-title">行为类型 <text class="required">*</text></text>
+        <view class="behavior-grid">
+          <view wx:for="{{behaviorTypes}}" wx:key="code" class="behavior-item {{form.type === item.code ? 'selected' : ''}}" bindtap="selectBehavior" data-code="{{item.code}}">
+            <text class="behavior-icon">{{item.icon}}</text>
+            <text class="behavior-name">{{item.name}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 时间 -->
+      <view class="form-section">
+        <text class="form-section-title">发生时间 <text class="required">*</text></text>
+        <view class="datetime-inputs">
+          <view class="datetime-group">
+            <label class="form-label">日期</label>
+            <picker 
+              mode="date" 
+              value="{{form.date}}"
+              bindchange="onDateChange"
+              start="1990-01-01"
+              end="{{today}}"
+            >
+              <view class="picker-input">
+                <text class="picker-text">{{form.date}}</text>
+                <text class="picker-arrow">›</text>
+              </view>
+            </picker>
+          </view>
+          <view class="datetime-group">
+            <label class="form-label">时间</label>
+            <picker 
+              mode="time" 
+              value="{{form.time}}"
+              bindchange="onTimeChange"
+            >
+              <view class="picker-input">
+                <text class="picker-text">{{form.time}}</text>
+                <text class="picker-arrow">›</text>
+              </view>
+            </picker>
+          </view>
+        </view>
+      </view>
+
+      <!-- 位置 -->
+      <view class="form-section">
+        <text class="form-section-title">位置</text>
+        <view class="location-input" bindtap="selectLocation">
+          <text class="location-icon">📍</text>
+          <view class="location-text">
+            <text class="location-main {{form.location ? '' : 'placeholder'}}">
+              {{form.location || '点击选择位置'}}
+            </text>
+            <text class="location-sub">{{form.coordinates}}</text>
+          </view>
+          <text class="location-arrow">›</text>
+        </view>
+      </view>
+
+      <!-- 备注 -->
+      <view class="form-section">
+        <text class="form-section-title">备注</text>
+        <view class="form-group">
+          <textarea 
+            class="form-textarea" 
+            placeholder="请输入备注信息（可选）"
+            name="remark"
+            value="{{form.remark}}"
+            bindinput="onInputChange"
+            data-field="remark"
+            maxlength="500"
+          />
+          <view class="textarea-count">
+            {{form.remark.length}}/500
+          </view>
+        </view>
+      </view>
+
+      <!-- 媒体 -->
+      <view class="form-section">
+        <text class="form-section-title">媒体</text>
+        <view class="media-upload">
+          <view class="media-item" wx:for="{{form.media}}" wx:key="url">
+            <image src="{{item.url}}" mode="aspectFill" />
+            <view class="media-delete" bindtap="deleteMedia" data-index="{{index}}">✕</view>
+          </view>
+          <view class="media-add" bindtap="uploadMedia">
+            <text class="media-icon">📷</text>
+            <text class="media-text">添加媒体</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 按钮 -->
+      <view class="form-actions">
+        <button class="btn btn-primary btn-block" formType="submit" loading="{{submitting}}">
+          保存记录
+        </button>
+        <button class="btn btn-outline btn-block" bindtap="navigateBack">
+          取消
+        </button>
+      </view>
+
+      <!-- 底部间距 -->
+      <view style="height: 20px;"></view>
+    </form>
+  </view>
+</view>

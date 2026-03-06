@@ -1,0 +1,148 @@
+<view class="page">
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-container">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 内容 -->
+  <view wx:if="{{!loading && pet}}" class="container">
+    <!-- 头部背景 -->
+    <view class="pet-header">
+      <image src="{{pet.avatar}}" class="pet-avatar" mode="aspectFill" />
+      <view class="pet-header-overlay"></view>
+      <view class="pet-header-content">
+        <text class="pet-name">{{pet.name}}</text>
+        <text class="pet-info">{{pet.species}} · {{pet.breed}}</text>
+      </view>
+      <view class="pet-actions">
+        <button class="action-btn edit-btn" bindtap="onEdit">编辑</button>
+        <button class="action-btn delete-btn" bindtap="onDelete">删除</button>
+      </view>
+    </view>
+
+    <!-- 基本信息 -->
+    <view class="section">
+      <text class="section-title">基本信息</text>
+      <view class="info-grid">
+        <view class="info-item">
+          <text class="info-label">性别</text>
+          <text class="info-value">{{pet.gender === 'M' ? '公' : '母'}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">年龄</text>
+          <text class="info-value">{{pet.age}} 岁</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">体重</text>
+          <text class="info-value">{{pet.weight}} kg</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">出生日期</text>
+          <text class="info-value">{{pet.birthDate}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 标签 -->
+    <view wx:if="{{pet.tags && pet.tags.length > 0}}" class="section">
+      <text class="section-title">标签</text>
+      <view class="tags-container">
+        <view wx:for="{{pet.tags}}" wx:key="id" class="tag">
+          {{item.name}}
+        </view>
+      </view>
+    </view>
+
+    <!-- 备注 -->
+    <view wx:if="{{pet.remark}}" class="section">
+      <text class="section-title">备注</text>
+      <view class="remark-box">
+        <text class="remark-text">{{pet.remark}}</text>
+      </view>
+    </view>
+
+    <!-- 行为记录 -->
+    <view class="section">
+      <view class="section-header">
+        <text class="section-title">最近行为记录</text>
+        <text class="section-link" bindtap="viewAllBehaviors">查看全部 ›</text>
+      </view>
+      <view wx:if="{{behaviors && behaviors.length > 0}}" class="behaviors-list">
+        <view wx:for="{{behaviors}}" wx:key="id" class="behavior-item">
+          <view class="behavior-header">
+            <text class="behavior-type">{{item.typeName}}</text>
+            <text class="behavior-time">{{item.happenedAt}}</text>
+          </view>
+          <text wx:if="{{item.remark}}" class="behavior-remark">{{item.remark}}</text>
+          <view wx:if="{{item.location}}" class="behavior-location">
+            <text class="location-icon">📍</text>
+            <text class="location-text">{{item.location}}</text>
+          </view>
+        </view>
+      </view>
+      <view wx:else class="empty-state">
+        <text class="empty-icon">📝</text>
+        <text class="empty-text">暂无行为记录</text>
+        <button class="btn btn-primary" bindtap="recordBehavior">记录行为</button>
+      </view>
+    </view>
+
+    <!-- 健康提醒 -->
+    <view class="section">
+      <view class="section-header">
+        <text class="section-title">健康提醒</text>
+        <text class="section-link" bindtap="viewAllReminders">查看全部 ›</text>
+      </view>
+      <view wx:if="{{reminders && reminders.length > 0}}" class="reminders-list">
+        <view wx:for="{{reminders}}" wx:key="id" class="reminder-item {{item.status === 'completed' ? 'completed' : ''}}">
+          <view class="reminder-checkbox">
+            <view class="checkbox {{item.status === 'completed' ? 'checked' : ''}}" bindtap="toggleReminder" data-id="{{item.id}}"></view>
+          </view>
+          <view class="reminder-content">
+            <text class="reminder-title">{{item.title}}</text>
+            <text class="reminder-date">{{item.remindDate}}</text>
+          </view>
+        </view>
+      </view>
+      <view wx:else class="empty-state">
+        <text class="empty-icon">💊</text>
+        <text class="empty-text">暂无健康提醒</text>
+        <button class="btn btn-primary" bindtap="addReminder">添加提醒</button>
+      </view>
+    </view>
+
+    <!-- 统计信息 -->
+    <view class="section">
+      <text class="section-title">统计信息</text>
+      <view class="stats-grid">
+        <view class="stat-item">
+          <text class="stat-value">{{stats.behaviorCount}}</text>
+          <text class="stat-label">行为记录</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-value">{{stats.reminderCount}}</text>
+          <text class="stat-label">健康提醒</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-value">{{stats.momentCount}}</text>
+          <text class="stat-label">发布动态</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-value">{{stats.daysSinceAdded}}</text>
+          <text class="stat-label">已记录天数</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部间距 -->
+    <view style="height: 20px;"></view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:if="{{!loading && !pet}}" class="empty-container">
+    <text class="empty-icon">🐾</text>
+    <text class="empty-text">宠物信息加载失败</text>
+    <button class="btn btn-primary" bindtap="loadPetDetail">重新加载</button>
+  </view>
+</view>

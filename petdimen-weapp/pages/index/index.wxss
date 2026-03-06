@@ -1,0 +1,389 @@
+.page {
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+/* 头部区域 */
+.header-section {
+  background: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%);
+  padding: 20px 16px;
+  color: #fff;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.greeting {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.greeting-text {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.greeting-time {
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.header-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+/* 快速操作 */
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: -20px;
+  padding: 0 16px;
+  position: relative;
+  z-index: 10;
+}
+
+.action-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 16px 12px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.action-card:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.action-icon {
+  font-size: 28px;
+}
+
+.action-text {
+  font-size: 12px;
+  font-weight: 500;
+  color: #333;
+}
+
+.action-count {
+  font-size: 11px;
+  color: #999;
+}
+
+/* 卡片通用 */
+.card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.card-action {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #FF6B6B;
+  font-size: 14px;
+}
+
+.action-link {
+  font-size: 12px;
+}
+
+.action-arrow {
+  font-size: 16px;
+  font-weight: 300;
+}
+
+/* 宠物列表 */
+.pet-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pet-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+  transition: background-color 0.2s;
+}
+
+.pet-item:active {
+  background-color: #f0f0f0;
+}
+
+.pet-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  margin-right: 12px;
+  object-fit: cover;
+}
+
+.pet-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pet-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.pet-breed {
+  font-size: 12px;
+  color: #999;
+}
+
+.pet-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+  background-color: rgba(255, 107, 107, 0.1);
+  color: #FF6B6B;
+}
+
+.pet-action {
+  color: #999;
+  font-size: 18px;
+}
+
+/* 健康提醒 */
+.reminder-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.reminder-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border-left: 4px solid #FF6B6B;
+}
+
+.reminder-icon {
+  font-size: 24px;
+  margin-right: 12px;
+  width: 40px;
+  text-align: center;
+}
+
+.reminder-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.reminder-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.reminder-time {
+  font-size: 12px;
+  color: #999;
+}
+
+.reminder-status {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: rgba(255, 107, 107, 0.1);
+  color: #FF6B6B;
+}
+
+/* 动态列表 */
+.moments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.moment-card {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px solid #f0f0f0;
+}
+
+.moment-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.moment-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+.moment-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.moment-username {
+  font-size: 13px;
+  font-weight: 500;
+  color: #333;
+}
+
+.moment-time {
+  font-size: 11px;
+  color: #999;
+}
+
+.moment-content {
+  font-size: 13px;
+  color: #333;
+  line-height: 1.5;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.moment-media {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.moment-image {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.moment-footer {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 8px;
+  border-top: 1px solid #e8e8e8;
+}
+
+.moment-stat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #999;
+}
+
+.stat-icon {
+  font-size: 14px;
+}
+
+.stat-count {
+  font-size: 12px;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.empty-state-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+  display: block;
+}
+
+.empty-state-text {
+  font-size: 14px;
+  color: #999;
+  margin-bottom: 16px;
+  display: block;
+}
+
+/* 加载状态 */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.loading-spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid #e8e8e8;
+  border-top-color: #FF6B6B;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 工具类 */
+.mt-16 {
+  margin-top: 16px;
+}
+
+.container {
+  padding: 16px;
+}

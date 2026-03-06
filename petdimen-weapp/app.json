@@ -1,0 +1,73 @@
+{
+  "pages": [
+    "pages/auth/login",
+    "pages/auth/register",
+    "pages/index/index",
+    "pages/pet/list",
+    "pages/pet/detail",
+    "pages/pet/add",
+    "pages/behavior/record",
+    "pages/moments/list",
+    "pages/moments/publish",
+    "pages/moments/detail",
+    "pages/nearby/services",
+    "pages/user/profile",
+    "pages/user/settings"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "PetDimen",
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "default"
+  },
+  "tabBar": {
+    "color": "#999",
+    "selectedColor": "#FF6B6B",
+    "backgroundColor": "#fff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "assets/icons/home.png",
+        "selectedIconPath": "assets/icons/home-active.png"
+      },
+      {
+        "pagePath": "pages/pet/list",
+        "text": "我的宠物",
+        "iconPath": "assets/icons/pet.png",
+        "selectedIconPath": "assets/icons/pet-active.png"
+      },
+      {
+        "pagePath": "pages/moments/list",
+        "text": "动态",
+        "iconPath": "assets/icons/moments.png",
+        "selectedIconPath": "assets/icons/moments-active.png"
+      },
+      {
+        "pagePath": "pages/user/profile",
+        "text": "我的",
+        "iconPath": "assets/icons/user.png",
+        "selectedIconPath": "assets/icons/user-active.png"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "获取您的位置信息用于推荐附近服务"
+    },
+    "scope.userInfo": {
+      "desc": "获取您的昵称、头像等信息"
+    }
+  },
+  "requiredPrivateInfos": [
+    "getLocation"
+  ],
+  "requiredBackgroundModes": [
+    "location"
+  ],
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "componentFramework": "glass-easel"
+}

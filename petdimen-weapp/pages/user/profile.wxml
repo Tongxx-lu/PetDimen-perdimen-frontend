@@ -1,0 +1,127 @@
+<view class="page">
+  <!-- 用户头部 -->
+  <view class="user-header">
+    <image src="{{userInfo.avatar}}" class="user-avatar" bindtap="changeAvatar" />
+    <view class="user-details">
+      <text class="user-name">{{userInfo.nickname}}</text>
+      <text class="user-id">ID: {{userInfo.id}}</text>
+    </view>
+    <button class="edit-btn" bindtap="goSettings">设置</button>
+  </view>
+
+  <!-- 统计信息 -->
+  <view class="stats-section">
+    <view class="stat-item">
+      <text class="stat-value">{{stats.petCount}}</text>
+      <text class="stat-label">宠物</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-value">{{stats.momentCount}}</text>
+      <text class="stat-label">动态</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-value">{{stats.followCount}}</text>
+      <text class="stat-label">关注</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-value">{{stats.followerCount}}</text>
+      <text class="stat-label">粉丝</text>
+    </view>
+  </view>
+
+  <!-- 个人简介 -->
+  <view class="bio-section">
+    <text class="bio-text">{{userInfo.bio || '暂无简介'}}</text>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="menu-section">
+    <!-- 我的宠物 -->
+    <view class="menu-item" bindtap="goMyPets">
+      <view class="menu-icon">🐾</view>
+      <view class="menu-content">
+        <text class="menu-title">我的宠物</text>
+        <text class="menu-subtitle">管理您的宠物档案</text>
+      </view>
+      <text class="menu-arrow">›</text>
+    </view>
+
+    <!-- 我的动态 -->
+    <view class="menu-item" bindtap="goMyMoments">
+      <view class="menu-icon">📸</view>
+      <view class="menu-content">
+        <text class="menu-title">我的动态</text>
+        <text class="menu-subtitle">查看发布的动态</text>
+      </view>
+      <text class="menu-arrow">›</text>
+    </view>
+
+    <!-- 我的收藏 -->
+    <view class="menu-item" bindtap="goFavorites">
+      <view class="menu-icon">❤️</view>
+      <view class="menu-content">
+        <text class="menu-title">我的收藏</text>
+        <text class="menu-subtitle">查看收藏的内容</text>
+      </view>
+      <text class="menu-arrow">›</text>
+    </view>
+
+    <!-- 关注的人 -->
+    <view class="menu-item" bindtap="goFollowing">
+      <view class="menu-icon">👥</view>
+      <view class="menu-content">
+        <text class="menu-title">关注的人</text>
+        <text class="menu-subtitle">管理关注列表</text>
+      </view>
+      <text class="menu-arrow">›</text>
+    </view>
+
+    <!-- 粉丝 -->
+    <view class="menu-item" bindtap="goFollowers">
+      <view class="menu-icon">👫</view>
+      <view class="menu-content">
+        <text class="menu-title">粉丝</text>
+        <text class="menu-subtitle">查看粉丝列表</text>
+      </view>
+      <text class="menu-arrow">›</text>
+    </view>
+
+    <!-- 账户与隐私 -->
+    <view class="menu-item" bindtap="goAccountSettings">
+      <view class="menu-icon">🔒</view>
+      <view class="menu-content">
+        <text class="menu-title">账户与隐私</text>
+        <text class="menu-subtitle">管理账户安全</text>
+      </view>
+      <text class="menu-arrow">›</text>
+    </view>
+
+    <!-- 帮助与反馈 -->
+    <view class="menu-item" bindtap="goHelp">
+      <view class="menu-icon">❓</view>
+      <view class="menu-content">
+        <text class="menu-title">帮助与反馈</text>
+        <text class="menu-subtitle">获取帮助或反馈问题</text>
+      </view>
+      <text class="menu-arrow">›</text>
+    </view>
+
+    <!-- 关于应用 -->
+    <view class="menu-item" bindtap="goAbout">
+      <view class="menu-icon">ℹ️</view>
+      <view class="menu-content">
+        <text class="menu-title">关于应用</text>
+        <text class="menu-subtitle">应用版本和信息</text>
+      </view>
+      <text class="menu-arrow">›</text>
+    </view>
+  </view>
+
+  <!-- 登出按钮 -->
+  <view class="logout-section">
+    <button class="logout-btn" bindtap="logout">退出登录</button>
+  </view>
+
+  <!-- 底部间距 -->
+  <view style="height: 20px;"></view>
+</view>

@@ -1,0 +1,176 @@
+<view class="page">
+  <!-- 搜索栏 -->
+  <view class="search-section">
+    <view class="search-bar">
+      <text class="search-icon">🔍</text>
+      <input 
+        class="search-input" 
+        placeholder="搜索服务..."
+        value="{{searchText}}"
+        bindinput="onSearchInput"
+      />
+    </view>
+
+    <!-- 筛选标签 -->
+    <view class="filter-tabs">
+      <view class="filter-tab {{activeType === 'all' ? 'active' : ''}}" bindtap="filterServices" data-type="all">
+        全部
+      </view>
+      <view class="filter-tab {{activeType === 'hospital' ? 'active' : ''}}" bindtap="filterServices" data-type="hospital">
+        医院
+      </view>
+      <view class="filter-tab {{activeType === 'grooming' ? 'active' : ''}}" bindtap="filterServices" data-type="grooming">
+        美容
+      </view>
+      <view class="filter-tab {{activeType === 'boarding' ? 'active' : ''}}" bindtap="filterServices" data-type="boarding">
+        寄养
+      </view>
+      <view class="filter-tab {{activeType === 'training' ? 'active' : ''}}" bindtap="filterServices" data-type="training">
+        训练
+      </view>
+    </view>
+
+    <!-- 地图切换按钮 -->
+    <view class="map-toggle" bindtap="toggleMap">
+      <text class="map-icon">{{showMap ? '📋' : '🗺'}}</text>
+      <text class="map-text">{{showMap ? '列表视图' : '地图视图'}}</text>
+    </view>
+  </view>
+
+  <!-- 地图视图 -->
+  <view wx:if="{{showMap && userLocation}}" class="map-container">
+    <map
+      id="serviceMap"
+      class="service-map"
+      latitude="{{userLocation.latitude}}"
+      longitude="{{userLocation.longitude}}"
+      markers="{{mapMarkers}}"
+      show-location="{{true}}"
+      scale="14"
+      bindmarkertap="onMarkerTap"
+    >
+      <cover-view class="map-controls">
+        <cover-view class="map-control-btn" bindtap="toggleMap">
+          <cover-image src="/assets/icons/list.png" class="control-icon" />
+        </cover-view>
+      </cover-view>
+    </map>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading && services.length === 0 && !showMap}}" class="loading-container">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 附近城市推荐 -->
+  <view wx:if="{{showNearbyCity && !showMap}}" class="nearby-city-section">
+    <view class="nearby-city-header">
+      <text class="nearby-city-icon">🏙</text>
+      <text class="nearby-city-title">附近城市推荐</text>
+      <text class="nearby-city-subtitle">本地暂无服务，为您推荐附近城市</text>
+    </view>
+
+    <view class="nearby-city-list">
+      <view wx:for="{{nearbyCityServices}}" wx:key="id" class="service-card" bindtap="useNearbyCityService" data-index="{{index}}">
+        <!-- 服务图片 -->
+        <image src="{{item.image || '/assets/images/default-service.png'}}" class="service-image" mode="aspectFill" />
+
+        <!-- 服务信息 -->
+        <view class="service-info">
+          <view class="service-header">
+            <text class="service-name">{{item.name}}</text>
+            <view class="service-rating">
+              <text class="rating-stars">★ {{item.rating || '5.0'}}</text>
+              <text class="rating-count">({{item.reviewCount || 0}})</text>
+            </view>
+          </view>
+
+          <!-- 服务类型 -->
+          <view class="service-type">
+            <text class="type-tag">{{item.typeName}}</text>
+            <text class="distance-tag">距离 {{item.distance}}km</text>
+          </view>
+
+          <!-- 位置信息 -->
+          <view class="service-location">
+            <text class="location-icon">📍</text>
+            <text class="location-text">{{item.address}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 服务列表 -->
+  <view wx:if="{{(!loading || services.length > 0) && !showMap}}" class="services-container">
+    <view wx:for="{{services}}" wx:key="id" class="service-card" bindtap="goDetail" data-id="{{item.id}}">
+      <!-- 服务图片 -->
+      <image src="{{item.image || '/assets/images/default-service.png'}}" class="service-image" mode="aspectFill" />
+
+      <!-- 服务信息 -->
+      <view class="service-info">
+        <view class="service-header">
+          <text class="service-name">{{item.name}}</text>
+          <view class="service-rating">
+            <text class="rating-stars">★ {{item.rating || '5.0'}}</text>
+            <text class="rating-count">({{item.reviewCount || 0}})</text>
+          </view>
+        </view>
+
+        <!-- 服务类型 -->
+        <view class="service-type">
+          <text class="type-tag">{{item.typeName}}</text>
+        </view>
+
+        <!-- 服务描述 -->
+        <text class="service-desc">{{item.description || '暂无描述'}}</text>
+
+        <!-- 位置和距离 -->
+        <view class="service-location">
+          <text class="location-icon">📍</text>
+          <text class="location-text">{{item.address}}</text>
+          <text class="distance">{{item.distance}}km</text>
+        </view>
+
+        <!-- 服务时间 -->
+        <view class="service-hours" wx:if="{{item.hours}}">
+          <text class="hours-icon">🕐</text>
+          <text class="hours-text">{{item.hours}}</text>
+        </view>
+
+        <!-- 操作按钮 -->
+        <view class="service-actions">
+          <button class="action-btn call-btn" bindtap="callService" data-phone="{{item.phone}}" catch:tap="stopPropagation">
+            📞 电话
+          </button>
+          <button class="action-btn map-btn" bindtap="openMap" data-lat="{{item.latitude}}" data-lng="{{item.longitude}}" catch:tap="stopPropagation">
+            🗺 导航
+          </button>
+          <button class="action-btn share-btn" bindtap="shareService" data-id="{{item.id}}" catch:tap="stopPropagation">
+            🔗 分享
+          </button>
+        </view>
+      </view>
+    </view>
+
+    <!-- 加载更多 -->
+    <view wx:if="{{hasMore}}" class="load-more">
+      <button class="load-more-btn" bindtap="loadMore" loading="{{loadingMore}}">
+        加载更多
+      </button>
+    </view>
+
+    <!-- 没有更多 -->
+    <view wx:if="{{!hasMore && services.length > 0}}" class="no-more">
+      <text>没有更多服务了</text>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:if="{{!loading && services.length === 0 && !showNearbyCity && !showMap}}" class="empty-container">
+    <text class="empty-icon">🏥</text>
+    <text class="empty-text">暂无服务</text>
+    <text class="empty-subtitle">请尝试其他搜索条件</text>
+  </view>
+</view>

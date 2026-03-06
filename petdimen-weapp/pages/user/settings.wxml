@@ -1,0 +1,175 @@
+<view class="page">
+  <view class="container">
+    <!-- 页面头部 -->
+    <view class="page-header">
+      <text class="page-title">设置</text>
+    </view>
+
+    <!-- 账户设置 -->
+    <view class="section">
+      <text class="section-title">账户设置</text>
+      
+      <view class="setting-item">
+        <text class="setting-label">昵称</text>
+        <view class="setting-value">
+          <input 
+            class="setting-input" 
+            placeholder="请输入昵称"
+            value="{{settings.nickname}}"
+            bindinput="onSettingChange"
+            data-field="nickname"
+          />
+        </view>
+      </view>
+
+      <view class="setting-item">
+        <text class="setting-label">个人简介</text>
+        <view class="setting-value">
+          <textarea 
+            class="setting-textarea" 
+            placeholder="请输入个人简介"
+            value="{{settings.bio}}"
+            bindinput="onSettingChange"
+            data-field="bio"
+            maxlength="200"
+          />
+        </view>
+      </view>
+
+      <view class="setting-item">
+        <text class="setting-label">手机号</text>
+        <text class="setting-value-text">{{settings.phone || '未绑定'}}</text>
+      </view>
+
+      <view class="setting-item">
+        <text class="setting-label">邮箱</text>
+        <text class="setting-value-text">{{settings.email || '未绑定'}}</text>
+      </view>
+    </view>
+
+    <!-- 隐私设置 -->
+    <view class="section">
+      <text class="section-title">隐私设置</text>
+      
+      <view class="setting-item">
+        <text class="setting-label">动态可见范围</text>
+        <picker 
+          mode="selector" 
+          range="{{privacyOptions}}"
+          value="{{privacyIndex}}"
+          bindchange="onPrivacyChange"
+        >
+          <view class="picker-input">
+            <text>{{privacyOptions[privacyIndex]}}</text>
+            <text class="picker-arrow">›</text>
+          </view>
+        </picker>
+      </view>
+
+      <view class="setting-item">
+        <text class="setting-label">允许陌生人私信</text>
+        <switch 
+          class="setting-switch" 
+          checked="{{settings.allowMessage}}"
+          bindchange="onSwitchChange"
+          data-field="allowMessage"
+        />
+      </view>
+
+      <view class="setting-item">
+        <text class="setting-label">显示位置信息</text>
+        <switch 
+          class="setting-switch" 
+          checked="{{settings.showLocation}}"
+          bindchange="onSwitchChange"
+          data-field="showLocation"
+        />
+      </view>
+
+      <view class="setting-item">
+        <text class="setting-label">接收推送通知</text>
+        <switch 
+          class="setting-switch" 
+          checked="{{settings.allowNotification}}"
+          bindchange="onSwitchChange"
+          data-field="allowNotification"
+        />
+      </view>
+    </view>
+
+    <!-- 通知设置 -->
+    <view class="section">
+      <text class="section-title">通知设置</text>
+      
+      <view class="setting-item">
+        <text class="setting-label">点赞通知</text>
+        <switch 
+          class="setting-switch" 
+          checked="{{settings.notifyLike}}"
+          bindchange="onSwitchChange"
+          data-field="notifyLike"
+        />
+      </view>
+
+      <view class="setting-item">
+        <text class="setting-label">评论通知</text>
+        <switch 
+          class="setting-switch" 
+          checked="{{settings.notifyComment}}"
+          bindchange="onSwitchChange"
+          data-field="notifyComment"
+        />
+      </view>
+
+      <view class="setting-item">
+        <text class="setting-label">关注通知</text>
+        <switch 
+          class="setting-switch" 
+          checked="{{settings.notifyFollow}}"
+          bindchange="onSwitchChange"
+          data-field="notifyFollow"
+        />
+      </view>
+
+      <view class="setting-item">
+        <text class="setting-label">系统通知</text>
+        <switch 
+          class="setting-switch" 
+          checked="{{settings.notifySystem}}"
+          bindchange="onSwitchChange"
+          data-field="notifySystem"
+        />
+      </view>
+    </view>
+
+    <!-- 其他设置 -->
+    <view class="section">
+      <text class="section-title">其他设置</text>
+      
+      <view class="setting-item" bindtap="clearCache">
+        <text class="setting-label">清除缓存</text>
+        <text class="setting-value-text">{{cacheSize}}</text>
+      </view>
+
+      <view class="setting-item" bindtap="checkUpdate">
+        <text class="setting-label">检查更新</text>
+        <text class="setting-value-text">v1.0.0</text>
+      </view>
+
+      <view class="setting-item" bindtap="goAbout">
+        <text class="setting-label">关于应用</text>
+        <text class="setting-arrow">›</text>
+      </view>
+    </view>
+
+    <!-- 保存按钮 -->
+    <view class="actions">
+      <button class="btn btn-primary" bindtap="saveSettings" loading="{{saving}}">
+        保存设置
+      </button>
+    </view>
+
+    <!-- 底部间距 -->
+    <view style="height: 20px;"></view>
+  </view>
+</view>

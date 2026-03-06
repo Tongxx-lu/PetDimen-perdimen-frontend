@@ -1,0 +1,150 @@
+<view class="page">
+  <!-- 顶部搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input-wrapper">
+      <text class="search-icon">🔍</text>
+      <input 
+        class="search-input" 
+        placeholder="搜索宠物名称"
+        bindinput="onSearchInput"
+        value="{{searchKeyword}}"
+      />
+    </view>
+    <button class="btn-add" bindtap="navigateTo" data-url="/pages/pet/add">
+      ➕ 添加
+    </button>
+  </view>
+
+  <!-- 筛选标签 -->
+  <view class="filter-bar">
+    <scroll-view scroll-x class="filter-scroll">
+      <view class="filter-item {{filterType === 'all' ? 'active' : ''}}" bindtap="setFilter" data-type="all">
+        全部
+      </view>
+      <view class="filter-item {{filterType === 'dog' ? 'active' : ''}}" bindtap="setFilter" data-type="dog">
+        🐕 狗
+      </view>
+      <view class="filter-item {{filterType === 'cat' ? 'active' : ''}}" bindtap="setFilter" data-type="cat">
+        🐈 猫
+      </view>
+      <view class="filter-item {{filterType === 'rabbit' ? 'active' : ''}}" bindtap="setFilter" data-type="rabbit">
+        🐰 兔子
+      </view>
+      <view class="filter-item {{filterType === 'other' ? 'active' : ''}}" bindtap="setFilter" data-type="other">
+        🐾 其他
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 标签筛选栏 -->
+  <view class="tag-filter-bar">
+    <view class="tag-filter-header" bindtap="toggleTagFilter">
+      <text class="tag-filter-title">🏷️ 标签筛选</text>
+      <text class="tag-filter-arrow {{showTagFilter ? 'active' : ''}}">▼</text>
+    </view>
+    
+    <!-- 当前选中的标签 -->
+    <view wx:if="{{filterTag}}" class="current-tag-filter">
+      <text class="current-tag-label">当前筛选：</text>
+      <view class="current-tag-item">
+        <text>{{filterTagName}}</text>
+        <text class="tag-close" bindtap="clearFilters">✕</text>
+      </view>
+    </view>
+
+    <!-- 标签列表 -->
+    <view wx:if="{{showTagFilter}}" class="tag-filter-list">
+      <scroll-view scroll-y class="tag-scroll">
+        <view wx:if="{{allTags.length > 0}}" class="tag-grid">
+          <view 
+            wx:for="{{allTags}}" 
+            wx:key="id" 
+            class="tag-filter-item {{filterTag === item.id ? 'active' : ''}}"
+            bindtap="setTagFilter"
+            data-tag-id="{{item.id}}">
+            {{item.name}}
+          </view>
+        </view>
+        <view wx:else class="tag-empty">
+          <text>暂无标签</text>
+        </view>
+      </scroll-view>
+      
+      <!-- 清除筛选按钮 -->
+      <view wx:if="{{filterTag}}" class="tag-filter-actions">
+        <button class="btn-clear-filter" bindtap="clearFilters">清除所有筛选</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 宠物列表 -->
+  <view class="container">
+    <view wx:if="{{pets.length > 0}}" class="pet-grid">
+      <view wx:for="{{pets}}" wx:key="id" class="pet-card" bindtap="navigateToPetDetail" data-id="{{item.id}}">
+        <view class="pet-card-image">
+          <image src="{{item.avatarUrl}}" mode="aspectFill" />
+          <view class="pet-card-badge">
+            {{item.species}}
+          </view>
+        </view>
+        
+        <view class="pet-card-content">
+          <text class="pet-card-name">{{item.name}}</text>
+          <text class="pet-card-breed">{{item.breed}}</text>
+          
+          <view class="pet-card-info">
+            <view class="info-item">
+              <text class="info-label">性别</text>
+              <text class="info-value">{{item.genderText}}</text>
+            </view>
+            <view class="info-item">
+              <text class="info-label">年龄</text>
+              <text class="info-value">{{item.ageText}}</text>
+            </view>
+          </view>
+
+          <view class="pet-card-tags">
+            <view wx:for="{{item.tags}}" wx:key="id" class="tag-small">
+              {{item}}
+            </view>
+          </view>
+
+          <view class="pet-card-actions">
+            <button class="btn-action" bindtap="editPet" data-id="{{item.id}}">
+              编辑
+            </button>
+            <button class="btn-action btn-danger" bindtap="deletePet" data-id="{{item.id}}">
+              删除
+            </button>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view wx:else class="empty-state">
+      <text class="empty-icon">🐾</text>
+      <text class="empty-text">还没有宠物信息</text>
+      <text class="empty-subtext">点击下方按钮添加您的第一只宠物</text>
+      <button class="btn btn-primary" bindtap="navigateTo" data-url="/pages/pet/add">
+        添加宠物
+      </button>
+    </view>
+
+    <!-- 加载更多 -->
+    <view wx:if="{{hasMore && pets.length > 0}}" class="load-more">
+      <button class="btn-load-more" bindtap="loadMore" disabled="{{loading}}">
+        {{loading ? '加载中...' : '加载更多'}}
+      </button>
+    </view>
+
+    <!-- 底部间距 -->
+    <view style="height: 20px;"></view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading && pets.length === 0}}" class="loading-overlay">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+</view>

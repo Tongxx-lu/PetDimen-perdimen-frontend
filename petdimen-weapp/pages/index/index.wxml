@@ -1,0 +1,157 @@
+<view class="page">
+  <!-- 顶部欢迎区域 -->
+  <view class="header-section">
+    <view class="header-content">
+      <view class="greeting">
+        <text class="greeting-text">早上好，{{userInfo.nickname || '宠物主人'}}</text>
+        <text class="greeting-time">{{currentTime}}</text>
+      </view>
+      <image class="header-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill" />
+    </view>
+  </view>
+
+  <!-- 快速操作卡片 -->
+  <view class="container">
+    <view class="quick-actions">
+      <view class="action-card" bindtap="navigateTo" data-url="/pages/pet/list">
+        <view class="action-icon">🐾</view>
+        <text class="action-text">我的宠物</text>
+        <text class="action-count">{{petCount}}</text>
+      </view>
+      <view class="action-card" bindtap="navigateTo" data-url="/pages/behavior/record">
+        <view class="action-icon">📝</view>
+        <text class="action-text">记录行为</text>
+        <text class="action-count">今日</text>
+      </view>
+      <view class="action-card" bindtap="navigateTo" data-url="/pages/moments/publish">
+        <view class="action-icon">📸</view>
+        <text class="action-text">发布动态</text>
+        <text class="action-count">分享</text>
+      </view>
+      <view class="action-card" bindtap="navigateTo" data-url="/pages/nearby/services">
+        <view class="action-icon">🏥</view>
+        <text class="action-text">附近服务</text>
+        <text class="action-count">查找</text>
+      </view>
+    </view>
+
+    <!-- 宠物列表卡片 -->
+    <view class="card mt-16">
+      <view class="card-header">
+        <text class="card-title">我的宠物</text>
+        <view class="card-action" bindtap="navigateTo" data-url="/pages/pet/list">
+          <text class="action-link">全部</text>
+          <text class="action-arrow">›</text>
+        </view>
+      </view>
+      
+      <view wx:if="{{pets.length > 0}}" class="pet-list">
+        <view wx:for="{{pets}}" wx:key="id" class="pet-item" bindtap="navigateToPetDetail" data-id="{{item.id}}">
+          <image class="pet-avatar" src="{{item.avatarUrl}}" mode="aspectFill" />
+          <view class="pet-info">
+            <text class="pet-name">{{item.name}}</text>
+            <text class="pet-breed">{{item.species}} · {{item.breed}}</text>
+            <view class="pet-tags">
+              <view wx:for="{{item.tags}}" wx:key="id" class="tag tag-primary">
+                {{item}}
+              </view>
+            </view>
+          </view>
+          <view class="pet-action">
+            <text class="action-arrow">›</text>
+          </view>
+        </view>
+      </view>
+
+      <view wx:else class="empty-state">
+        <text class="empty-state-icon">🐾</text>
+        <text class="empty-state-text">还没有宠物信息</text>
+        <button class="btn btn-primary btn-small" bindtap="navigateTo" data-url="/pages/pet/add">
+          添加宠物
+        </button>
+      </view>
+    </view>
+
+    <!-- 健康提醒卡片 -->
+    <view class="card mt-16">
+      <view class="card-header">
+        <text class="card-title">健康提醒</text>
+      </view>
+      
+      <view wx:if="{{reminders.length > 0}}" class="reminder-list">
+        <view wx:for="{{reminders}}" wx:key="id" class="reminder-item">
+          <view class="reminder-icon {{item.type}}">
+            {{item.icon}}
+          </view>
+          <view class="reminder-content">
+            <text class="reminder-title">{{item.petName}} - {{item.type}}</text>
+            <text class="reminder-time">下次提醒：{{item.nextTime}}</text>
+          </view>
+          <view class="reminder-status {{item.status}}">
+            {{item.statusText}}
+          </view>
+        </view>
+      </view>
+
+      <view wx:else class="empty-state">
+        <text class="empty-state-text">暂无健康提醒</text>
+      </view>
+    </view>
+
+    <!-- 最新动态卡片 -->
+    <view class="card mt-16">
+      <view class="card-header">
+        <text class="card-title">最新动态</text>
+        <view class="card-action" bindtap="navigateTo" data-url="/pages/moments/list">
+          <text class="action-link">更多</text>
+          <text class="action-arrow">›</text>
+        </view>
+      </view>
+
+      <view wx:if="{{moments.length > 0}}" class="moments-list">
+        <view wx:for="{{moments}}" wx:key="id" class="moment-card" bindtap="navigateToMoment" data-id="{{item.id}}">
+          <view class="moment-header">
+            <image class="moment-avatar" src="{{item.userAvatar}}" mode="aspectFill" />
+            <view class="moment-user-info">
+              <text class="moment-username">{{item.userName}}</text>
+              <text class="moment-time">{{item.createdAt}}</text>
+            </view>
+          </view>
+          
+          <text class="moment-content">{{item.content}}</text>
+          
+          <view wx:if="{{item.media.length > 0}}" class="moment-media">
+            <image wx:for="{{item.media}}" wx:key="url" src="{{item.url}}" mode="aspectFill" class="moment-image" />
+          </view>
+
+          <view class="moment-footer">
+            <view class="moment-stat">
+              <text class="stat-icon">👍</text>
+              <text class="stat-count">{{item.likeCount}}</text>
+            </view>
+            <view class="moment-stat">
+              <text class="stat-icon">💬</text>
+              <text class="stat-count">{{item.commentCount}}</text>
+            </view>
+            <view class="moment-stat">
+              <text class="stat-icon">🔗</text>
+              <text class="stat-count">{{item.shareCount}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view wx:else class="empty-state">
+        <text class="empty-state-text">暂无动态</text>
+      </view>
+    </view>
+
+    <!-- 底部间距 -->
+    <view style="height: 20px;"></view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading">
+    <view class="loading-spinner"></view>
+  </view>
+</view>

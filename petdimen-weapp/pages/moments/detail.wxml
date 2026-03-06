@@ -1,0 +1,131 @@
+<view class="page">
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-container">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 内容 -->
+  <view wx:if="{{!loading && moment}}" class="container">
+    <!-- 动态信息 -->
+    <view class="moment-section">
+      <!-- 用户信息 -->
+      <view class="moment-header">
+        <image src="{{moment.userAvatar}}" class="user-avatar" />
+        <view class="user-info">
+          <text class="user-name">{{moment.userName}}</text>
+          <text class="moment-time">{{moment.createdAt}}</text>
+        </view>
+        <view class="moment-menu" bindtap="showMenu">⋮</view>
+      </view>
+
+      <!-- 动态内容 -->
+      <view class="moment-content">
+        <text class="moment-text">{{moment.content}}</text>
+      </view>
+
+      <!-- 媒体内容 -->
+      <view wx:if="{{moment.media && moment.media.length > 0}}" class="moment-media">
+        <view wx:if="{{moment.media.length === 1}}" class="media-single">
+          <image src="{{moment.media[0].url}}" mode="aspectFill" bindtap="previewImage" data-url="{{moment.media[0].url}}" />
+        </view>
+        <view wx:else class="media-grid">
+          <view wx:for="{{moment.media}}" wx:key="url" class="media-item">
+            <image src="{{item.url}}" mode="aspectFill" bindtap="previewImage" data-url="{{item.url}}" />
+          </view>
+        </view>
+      </view>
+
+      <!-- 宠物标签 -->
+      <view wx:if="{{moment.petTags && moment.petTags.length > 0}}" class="pet-tags">
+        <view wx:for="{{moment.petTags}}" wx:key="id" class="pet-tag">
+          {{item.name}}
+        </view>
+      </view>
+
+      <!-- 位置信息 -->
+      <view wx:if="{{moment.location}}" class="moment-location">
+        <text class="location-icon">📍</text>
+        <text class="location-text">{{moment.location}}</text>
+      </view>
+
+      <!-- 互动统计 -->
+      <view class="moment-stats">
+        <text class="stat-item">👍 {{moment.likeCount}}</text>
+        <text class="stat-item">💬 {{moment.commentCount}}</text>
+        <text class="stat-item">👁 {{moment.viewCount}}</text>
+      </view>
+
+      <!-- 操作按钮 -->
+      <view class="moment-actions">
+        <button class="action-btn {{moment.liked ? 'liked' : ''}}" bindtap="toggleLike">
+          {{moment.liked ? '👍 已赞' : '👍 赞'}}
+        </button>
+        <button class="action-btn" bindtap="scrollToComments">
+          💬 评论
+        </button>
+        <button class="action-btn" bindtap="shareMoment">
+          🔗 分享
+        </button>
+      </view>
+    </view>
+
+    <!-- 评论区 -->
+    <view class="comments-section">
+      <text class="section-title">评论 ({{moment.commentCount}})</text>
+
+      <!-- 评论列表 -->
+      <view wx:if="{{comments && comments.length > 0}}" class="comments-list">
+        <view wx:for="{{comments}}" wx:key="id" class="comment-item">
+          <image src="{{item.userAvatar}}" class="comment-avatar" />
+          <view class="comment-content">
+            <view class="comment-header">
+              <text class="comment-user">{{item.userName}}</text>
+              <text class="comment-time">{{item.createdAt}}</text>
+            </view>
+            <text class="comment-text">{{item.content}}</text>
+            <view class="comment-actions">
+              <text class="comment-action" bindtap="likeComment" data-id="{{item.id}}">
+                {{item.liked ? '👍' : '👍'}}
+              </text>
+              <text class="comment-action" bindtap="replyComment" data-id="{{item.id}}">
+                回复
+              </text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 空评论 -->
+      <view wx:else class="empty-comments">
+        <text class="empty-icon">💬</text>
+        <text class="empty-text">暂无评论</text>
+      </view>
+
+      <!-- 加载更多评论 -->
+      <view wx:if="{{hasMoreComments}}" class="load-more-comments">
+        <button class="load-more-btn" bindtap="loadMoreComments">加载更多评论</button>
+      </view>
+    </view>
+
+    <!-- 评论输入框 -->
+    <view class="comment-input-section">
+      <input 
+        class="comment-input" 
+        placeholder="发表评论..."
+        value="{{commentText}}"
+        bindinput="onCommentInput"
+      />
+      <button class="send-btn" bindtap="submitComment" loading="{{submittingComment}}">
+        发送
+      </button>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:if="{{!loading && !moment}}" class="empty-container">
+    <text class="empty-icon">📸</text>
+    <text class="empty-text">动态加载失败</text>
+    <button class="btn btn-primary" bindtap="loadMomentDetail">重新加载</button>
+  </view>
+</view>

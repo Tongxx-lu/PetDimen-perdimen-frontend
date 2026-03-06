@@ -1,0 +1,414 @@
+.page {
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.container {
+  padding-bottom: 20px;
+}
+
+/* 加载状态 */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  gap: 16px;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f0f0f0;
+  border-top-color: #FF6B6B;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  font-size: 14px;
+  color: #999;
+}
+
+/* 空状态 */
+.empty-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  gap: 16px;
+}
+
+.empty-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.empty-text {
+  font-size: 14px;
+  color: #999;
+  margin-bottom: 16px;
+}
+
+/* 宠物头部 */
+.pet-header {
+  position: relative;
+  height: 280px;
+  background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
+  overflow: hidden;
+}
+
+.pet-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pet-header-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.pet-header-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 16px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent);
+  color: #fff;
+}
+
+.pet-name {
+  display: block;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.pet-info {
+  display: block;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.pet-actions {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  border: none;
+  height: auto;
+  line-height: 1;
+}
+
+.edit-btn {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #FF6B6B;
+}
+
+.delete-btn {
+  background-color: rgba(255, 107, 107, 0.9);
+  color: #fff;
+}
+
+/* 区域 */
+.section {
+  background-color: #fff;
+  margin: 12px 16px;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+.section-link {
+  font-size: 12px;
+  color: #FF6B6B;
+}
+
+/* 信息网格 */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.info-label {
+  font-size: 12px;
+  color: #999;
+  font-weight: 500;
+}
+
+.info-value {
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+/* 标签 */
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 6px 12px;
+  background-color: #f0f0f0;
+  border-radius: 16px;
+  font-size: 12px;
+  color: #666;
+}
+
+/* 备注 */
+.remark-box {
+  padding: 12px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border-left: 3px solid #FF6B6B;
+}
+
+.remark-text {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* 行为记录 */
+.behaviors-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.behavior-item {
+  padding: 12px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border-left: 3px solid #4ECDC4;
+}
+
+.behavior-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.behavior-type {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.behavior-time {
+  font-size: 12px;
+  color: #999;
+}
+
+.behavior-remark {
+  display: block;
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.behavior-location {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #999;
+}
+
+.location-icon {
+  font-size: 12px;
+}
+
+.location-text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 健康提醒 */
+.reminders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.reminder-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border-left: 3px solid #FAAD14;
+  gap: 12px;
+}
+
+.reminder-item.completed {
+  opacity: 0.6;
+}
+
+.reminder-checkbox {
+  flex-shrink: 0;
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #e8e8e8;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.checkbox.checked {
+  background-color: #95DE64;
+  border-color: #95DE64;
+}
+
+.checkbox.checked::after {
+  content: '✓';
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.reminder-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.reminder-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.reminder-date {
+  font-size: 12px;
+  color: #999;
+}
+
+/* 统计信息 */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  gap: 8px;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 600;
+  color: #FF6B6B;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #999;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  gap: 12px;
+}
+
+.empty-state .empty-icon {
+  font-size: 48px;
+  margin-bottom: 8px;
+}
+
+.empty-state .empty-text {
+  font-size: 14px;
+  color: #999;
+  margin-bottom: 16px;
+}
+
+/* 按钮 */
+.btn {
+  padding: 12px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background-color: #FF6B6B;
+  color: #fff;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-primary:active {
+  opacity: 0.8;
+}

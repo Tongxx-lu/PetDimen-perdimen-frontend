@@ -1,0 +1,148 @@
+<view class="page">
+  <view class="container">
+    <!-- 头部 -->
+    <view class="page-header">
+      <text class="page-title">{{isEdit ? '编辑宠物' : '添加宠物'}}</text>
+      <text class="page-subtitle">填写宠物的基本信息</text>
+    </view>
+
+    <!-- 表单 -->
+    <form bindsubmit="onSubmit">
+      <!-- 宠物头像 -->
+      <view class="form-section">
+        <text class="form-section-title">宠物头像</text>
+        <view class="avatar-upload" bindtap="uploadAvatar">
+          <image wx:if="{{form.avatarUrl}}" src="{{form.avatarUrl}}" mode="aspectFill" />
+          <view wx:else class="avatar-placeholder">
+            <text class="avatar-icon">📷</text>
+            <text class="avatar-text">点击上传头像</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 基本信息 -->
+      <view class="form-section">
+        <text class="form-section-title">基本信息</text>
+
+        <view class="form-group">
+          <label class="form-label">宠物名称 <text class="required">*</text></label>
+          <input 
+            class="form-input" 
+            placeholder="请输入宠物名称"
+            name="name"
+            value="{{form.name}}"
+            bindinput="onInputChange"
+            data-field="name"
+          />
+        </view>
+
+        <view class="form-group">
+          <label class="form-label">物种 <text class="required">*</text></label>
+          <picker 
+            mode="selector" 
+            range="{{speciesOptions}}"
+            value="{{form.speciesIndex}}"
+            bindchange="onSpeciesChange"
+          >
+            <view class="picker-input">
+              <text class="picker-text {{form.species ? '' : 'placeholder'}}">
+                {{form.species || '请选择物种'}}
+              </text>
+              <text class="picker-arrow">›</text>
+            </view>
+          </picker>
+        </view>
+
+        <view class="form-group">
+          <label class="form-label">品种</label>
+          <input 
+            class="form-input" 
+            placeholder="请输入品种"
+            name="breed"
+            value="{{form.breed}}"
+            bindinput="onInputChange"
+            data-field="breed"
+          />
+        </view>
+
+        <view class="form-group">
+          <label class="form-label">性别</label>
+          <view class="radio-group">
+            <label class="radio-item">
+              <radio name="gender" value="1" checked="{{form.gender === 1}}" bindchange="onGenderChange" />
+              <text>公</text>
+            </label>
+            <label class="radio-item">
+              <radio name="gender" value="2" checked="{{form.gender === 2}}" bindchange="onGenderChange" />
+              <text>母</text>
+            </label>
+            <label class="radio-item">
+              <radio name="gender" value="0" checked="{{form.gender === 0}}" bindchange="onGenderChange" />
+              <text>未知</text>
+            </label>
+          </view>
+        </view>
+
+        <view class="form-group">
+          <label class="form-label">出生日期</label>
+          <picker 
+            mode="date" 
+            value="{{form.birthDate}}"
+            bindchange="onBirthDateChange"
+            start="1990-01-01"
+            end="{{today}}"
+          >
+            <view class="picker-input">
+              <text class="picker-text {{form.birthDate ? '' : 'placeholder'}}">
+                {{form.birthDate || '请选择出生日期'}}
+              </text>
+              <text class="picker-arrow">›</text>
+            </view>
+          </picker>
+        </view>
+      </view>
+
+      <!-- 标签 -->
+      <view class="form-section">
+        <text class="form-section-title">标签</text>
+        <view class="tags-container">
+          <view wx:for="{{availableTags}}" wx:key="id" class="tag-item {{form.tags.includes(item.id) ? 'selected' : ''}}" bindtap="toggleTag" data-id="{{item.id}}">
+            {{item.name}}
+          </view>
+        </view>
+      </view>
+
+      <!-- 备注 -->
+      <view class="form-section">
+        <text class="form-section-title">备注</text>
+        <view class="form-group">
+          <textarea 
+            class="form-textarea" 
+            placeholder="请输入宠物的备注信息（如性格特点、特殊需求等）"
+            name="remark"
+            value="{{form.remark}}"
+            bindinput="onInputChange"
+            data-field="remark"
+            maxlength="500"
+          />
+          <view class="textarea-count">
+            {{form.remark.length}}/500
+          </view>
+        </view>
+      </view>
+
+      <!-- 按钮 -->
+      <view class="form-actions">
+        <button class="btn btn-primary btn-block" formType="submit" loading="{{submitting}}">
+          {{isEdit ? '保存修改' : '添加宠物'}}
+        </button>
+        <button class="btn btn-outline btn-block" bindtap="navigateBack">
+          取消
+        </button>
+      </view>
+
+      <!-- 底部间距 -->
+      <view style="height: 20px;"></view>
+    </form>
+  </view>
+</view>
